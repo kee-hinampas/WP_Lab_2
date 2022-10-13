@@ -82,9 +82,81 @@ function moveBear(e){
 
 class Bee{
     constructor(beeNumber){
+        //attributes
         this.htmlElement = createBeeImg(beeNumber);
-        this.id = this.htmlElement.id;
-        this.x = this.htmlElement.offsetLeft;
-        this.y = this.htmlElement.offsetTop;
+        this.id = this.htmlElement.id; //html id
+        this.x = this.htmlElement.offsetLeft; //left position
+        this.y = this.htmlElement.offsetTop;//top position
+
+        //methods
+        //move bee
+        this.move = function(dx,dy){
+            this.x += dx;
+            this.y += dy;
+            this.display();
+
+        };
+
+        //display bees
+        this.display = function(){
+            //adjusts position of the bee and displays it
+            this.fitBounds(); //adjust bounds
+            this.htmlElement.style.left = this.x + "px";
+            this.htmlElement.style.top = this.y + "px";
+            this.htmlElement.style.display = "block";
+        };
+
+        this.fitBounds = function(){
+            //check and make sure that the bees stay in the board space
+            let parent = this.htmlElement.parent;
+            let iw = this.htmlElement.offsetWidth;
+            let ih = this.htmlElement.offsetHeight;
+            //get parent element's left, top position and height and width
+            let l = parent.offsetLeft;
+            let t = parent.offsetTop;
+            let w = parent.offsetWidth;
+            let h = parent.offsetHeight;
+
+            if (this.x < 0){
+                this.x = 0;
+            } 
+            if (this.x > w-iw){
+                this.x = w - iw;
+            }
+            if (this.y < 0){
+                this.y = 0;
+            }
+            if (this.y > h - ih){
+                this.y = h -ih;
+            }
+        };
     }
+}
+
+function createBeeImg(wNum){
+    //get dimensions and position of board div
+    let boardDiv = document.getElementById("board");
+    let boardDivW = boardDiv.offsetWidth;
+    let boardDivH = boardDiv.offsetHeight;
+    let boardDivX = boardDiv.offsetLeft;
+    let boardDivY = boardDiv.offsetTop;
+
+    //create this img element
+     let img = document.createElement("img"); //create image tag
+     img.setAttribute("src", "bee.gif");
+     img.setAttribute("width", "100");
+     img.setAttribute("alt", "A bee!");
+     img.setAttribute("id", "bee" + wNum);
+     img.setAttribute("class", "bee"); //set class of html tag img
+     //add the img element as a child element of the board div
+     img.style.position = "absolute";
+     boardDiv.appendChild(img);
+
+    //set initial position
+    let x = getRandomInt(boardDivW);
+    let y = getRandomInt(boardDivH);
+    img.style.left = (boardDivX + x) + "px";
+    img.style.top = (y) + "px";
+
+    return img;
 }
