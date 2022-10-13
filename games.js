@@ -51,6 +51,12 @@ function start(){
     bear.setSpeed(bearSpeed);
 
     document.addEventListener("keydown", moveBear,false);
+
+    //create new array for bees
+    bees = new Array();
+
+    //create Bees
+    makeBees();
 }
 
 //create eventhandler to handle keyboard events to move the bear
@@ -159,4 +165,30 @@ function createBeeImg(wNum){
     img.style.top = (y) + "px";
 
     return img;
+}
+
+function getRandomInt(max){
+    return Math.floor(Math.random()*max);
+}
+
+//create bees
+function makeBees(){
+    //get number of bees specified by the user
+    let nbBees = document.getElementById("nbBees").value;
+    nbBees = Number(nbBees); //convert the input into a number
+
+    if(isNaN(nbBees)){
+        window.alert("Invalid number of bees");
+        return;
+    }
+
+    //create bees
+    let i = 1;
+    while (i<=nbBees){
+        var num = 1;
+        var bee = new Bee(num); //create object and its img element
+        bee.display();
+        bees.push(bee);
+        i++;
+    }
 }
