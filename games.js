@@ -36,11 +36,19 @@ function Bear(){
         this.htmlElement.style.display = "absolute";
     };
 
+    this.setSpeed = function(bearSpeed){
+        this.dBear = bearSpeed; //set dbear to speed value
+
+    };
+
 }
 
 function start(){
     //create bear object
     bear = new Bear();
+    
+    bearSpeed = document.getElementById("bearSpeed").value;
+    bear.setSpeed(bearSpeed);
 
     document.addEventListener("keydown", moveBear,false);
 }
@@ -70,4 +78,13 @@ function moveBear(e){
     }
 
 
+}
+
+class Bee{
+    constructor(beeNumber){
+        this.htmlElement = createBeeImg(beeNumber);
+        this.id = this.htmlElement.id;
+        this.x = this.htmlElement.offsetLeft;
+        this.y = this.htmlElement.offsetTop;
+    }
 }
